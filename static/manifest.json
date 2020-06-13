@@ -1,0 +1,10 @@
+{
+  "name": "hype-map-extension",
+  "version": "0.1.0",
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "permissions": ["https://www.twitch.tv/*"],
+  "manifest_version": 2
+}
