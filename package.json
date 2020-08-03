@@ -11,13 +11,16 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/recharts": "^1.8.10",
+    "date-fns": "^2.15.0",
+    "hotkeys-js": "^3.8.1",
+    "path-parser": "^6.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "recharts": "^1.8.5",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "parcel src/background.ts src/content.tsx",
+    "start": "parcel src/background.ts src/content.tsx src/index.tsx --no-hmr",
     "build": "parcel build src/background.ts src/content.tsx",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

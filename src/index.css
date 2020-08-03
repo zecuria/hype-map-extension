@@ -1,3 +1,49 @@
-div#seekbar-interaction-area__interactionArea {
-  position: absolute;
+div.app-test {
+  top: 20px;
+  width: fit-content;
+}
+
+.app-test .tw-form-tag__icon {
+  height: 1.6rem;
+  width: 1.6rem;
+} 
+
+.app-test .tw-form-tag--selected {
+  background-color: rgba(0,0,0,.05);
+  background-color: var(--color-background-tag-default);
+  border-style: solid;
+}
+
+.app-test .tw-form-tag {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-clip: padding-box;
+  background-color: transparent;
+  border: 2px solid rgba(0,0,0,.05);
+  border: var(--border-width-tag) solid var(--color-border-tag);
+  color: rgba(0,0,0,.7);
+  color: var(--color-text-tag);
+  font-family: inherit;
+  height: 3rem;
+  line-height: 1.4;
+  padding-left: .8rem;
+  padding-right: .3rem;
+  white-space: nowrap;
+}
+
+.app-test .tw-form-tag--selected:not(:disabled):hover, .tw-form-tag--unselected:not(:disabled):hover {
+  background: rgba(0,0,0,.05);
+  background: var(--color-background-interactable-alpha-hover);
+  color: rgba(0,0,0,.7);
+  color: var(--color-text-tag);
+  text-decoration: none;
+}
+
+[data-a-player-type="site_mini"] #hype-map-extension-root {
+  display: none;
+}
+
+.App {
+  /* background-color: rgba(0,0,0,.6) */
 }
