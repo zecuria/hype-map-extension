@@ -140,7 +140,7 @@ function App({ isLoading, data, errorMessage, graphHeight }: AppProps) {
   }
 
   if (errorMessage) {
-    return <div>Error: {errorMessage}}</div>
+    return <div style={{ backgroundColor: '#fff' }}>Error: {errorMessage} (to hide / show press alt+h)</div>
   }
 
   return (
