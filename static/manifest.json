@@ -1,6 +1,9 @@
 {
   "name": "hype-map-extension",
   "version": "0.1.0",
+  "icons": {
+    "48": "icon48.png"
+  },
   "background": {
     "persistent": false,
     "scripts": ["background.js"]

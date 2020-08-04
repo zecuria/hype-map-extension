@@ -20,7 +20,6 @@ const mount = (videoId: string) => {
   chrome.runtime.sendMessage({
     videoId: videoId
   }, (res) => {
-    console.log(res);
     if (res.success) {
       ReactDOM.render(
         <React.StrictMode>
@@ -45,20 +44,16 @@ const mount = (videoId: string) => {
     document.getElementById(id)
   );
 }
-console.log(window.location.pathname);
 
 const main = () => {
-  console.log(videoPlayer, element);
   if (!videoPlayer) {
     return;
   }
-  console.log('inside main');
 
   const result = path.partialTest(window.location.pathname) || {};
   const mountedVideoId = element && element.dataset.videoId;
 
   if (result.videoId && !element) {
-
     const anchor = document.createElement('div');
     anchor.style.position = 'absolute';
     anchor.style.left = `${0}px`;
@@ -83,6 +78,7 @@ const main = () => {
 
   if(!result.videoId && element) {
     ReactDOM.unmountComponentAtNode(element);
+    element.parentElement && element.parentElement.removeChild(element);
   }
 }
 
