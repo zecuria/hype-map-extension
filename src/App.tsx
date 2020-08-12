@@ -1,15 +1,12 @@
-import React, { useState, useEffect, CSSProperties } from 'react';
-import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { AreaChart, XAxis, Tooltip, Area, ResponsiveContainer } from 'recharts';
 import './App.css';
 import { renderContent } from './Tooltip';
 import Input from './Components/Input';
 import FilterPill from './Components/FilterPill';
 import hotkeys from 'hotkeys-js';
-import { getCurrentPlayer } from './getProp';
 import { Toggle } from './Components/Toggle';
 import { HelpToolTip } from './Components/HelpTooltip';
-// import { data } from './data';
-// const data = require('./processed-data.json') as Item[];
 
 interface AppProps {
   data: Item[],
@@ -18,9 +15,11 @@ interface AppProps {
   errorMessage: string,
 }
 
+
 const click = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
   const element = document.querySelector('[data-test-selector="seekbar-interaction-area__interactionArea"]');
   const cursor = document.querySelector('.recharts-tooltip-cursor');
+
   if (!element) {
     return;
   }
@@ -29,19 +28,15 @@ const click = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     return;
   }
 
+  const key = Object.keys(element).find(key => key.startsWith('__reactInternalInstance$')) || '';
+
+  // @ts-ignore
+  let instance = element[key];
+  const onClick = instance && instance.memoizedProps && instance.memoizedProps.onClick;
+
   const { right } = cursor.getBoundingClientRect();
-  const { top, height } = element.getBoundingClientRect();
 
-  var event = new MouseEvent('click', {
-    view: window,
-    bubbles: true,
-    cancelable: true,
-    clientX: right,
-    screenY: top + height / 2,
-  });
-  console.log(right);
-
-  element.dispatchEvent(event);
+  onClick && onClick({ type: 'click', clientX: right });
 }
 
 interface Item {
@@ -51,31 +46,6 @@ interface Item {
   count: number,
   map: WordCount[],
 }
-
-
-/*
-const onGraphClick = (e: any) => {
-  const element = document.querySelector('[data-test-selector="seekbar-interaction-area__interactionArea"]');
-  if (!element) {
-    return;
-  }
-
-  const { top, left, width, right } = element.getBoundingClientRect();
-  console.log(element.getBoundingClientRect());
-
-  const item = e.activePayload[0].payload as Item;
-  const lastItem = data[data.length - 1];
-  const firstItem = data[0];
-  const itemStart = item.startTimeStamp - firstItem.startTimeStamp;
-  console.log('start ', itemStart);
-  const itemEnd = lastItem.startTimeStamp - firstItem.startTimeStamp;
-  
-  const clientX = (itemStart / itemEnd) * width;
-
-  console.log(clientX);
-  console.log(clientX + left);
-}
-*/
 
 interface WordCount {
   word: string,
@@ -121,7 +91,6 @@ function App({ isLoading, data, errorMessage, graphHeight }: AppProps) {
 
   useEffect(() => {
     hotkeys('alt+h', () => {
-      console.log('here', hide);
       setHide(!hide);
     });
 

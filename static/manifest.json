@@ -1,13 +1,16 @@
 {
-  "name": "hype-map-extension",
-  "version": "0.1.0",
+  "name": "Hype Map",
+  "version": "0.2.0",
   "icons": {
-    "48": "icon48.png"
+    "48": "icon48.png",
+    "32": "icon32.png",
+    "128": "icon128.png"
   },
-  "background": {
-    "persistent": false,
-    "scripts": ["background.js"]
-  },
+  "content_scripts": [{
+    "matches": ["https://www.twitch.tv/*"],
+    "js": ["content.js"]
+  }],
+  "web_accessible_resources": ["index.js", "index.css"],
   "permissions": ["https://www.twitch.tv/*"],
   "manifest_version": 2
 }
