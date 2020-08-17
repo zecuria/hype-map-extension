@@ -58,6 +58,7 @@ const main = () => {
   const videoPlayer = document.querySelector('[data-test-selector="video-player__video-container"]');
 
   const path = Path.createPath('/videos/:videoId');
+  const path2 = Path.createPath('/u/:user/content/video-producer/highlighter/:videoId');
   const element = document.getElementById(id);
 
   if (!videoPlayer) {
@@ -65,10 +66,13 @@ const main = () => {
   }
 
   const result = path.partialTest(window.location.pathname) || {};
+  const result2 = path2.partialTest(window.location.pathname) || {};
+  console.log(result2);
   const mountedVideoId = element && element.dataset.videoId;
 
   console.log(element);
-  if (result.videoId && !element) {
+  const videoId = result.videoId || result2.videoId;
+  if (videoId && !element) {
     const anchor = document.createElement('div');
     anchor.style.position = 'absolute';
     anchor.style.left = `${0}px`;
@@ -79,18 +83,18 @@ const main = () => {
     anchor.setAttribute("class", "tw-pd-x-2")
     videoPlayer.insertBefore(anchor, videoPlayer.childNodes[0]);
 
-    anchor.setAttribute("data-video-id", result.videoId);;
-    mount(result.videoId);
+    anchor.setAttribute("data-video-id", videoId);;
+    mount(videoId);
     return;
   }
 
-  if (element && result.videoId && result.videoId !== mountedVideoId) {
-    element.setAttribute("data-video-id", result.videoId);
-    mount(result.videoId);
+  if (element && videoId && videoId !== mountedVideoId) {
+    element.setAttribute("data-video-id", videoId);
+    mount(videoId);
     return;
   };
 
-  if (!result.videoId && element) {
+  if (!videoId && element) {
     ReactDOM.unmountComponentAtNode(element);
     element.parentElement && element.parentElement.removeChild(element);
   }

@@ -34,9 +34,13 @@ const click = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
   let instance = element[key];
   const onClick = instance && instance.memoizedProps && instance.memoizedProps.onClick;
 
-  const { right } = cursor.getBoundingClientRect();
+  const { right, left, } = cursor.getBoundingClientRect();
 
-  onClick && onClick({ type: 'click', clientX: right });
+  const middle = (right + left) / 2
+
+  console.log(cursor.getBoundingClientRect());
+
+  onClick && onClick({ type: 'click', clientX: middle });
 }
 
 interface Item {
