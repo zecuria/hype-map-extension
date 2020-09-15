@@ -1,6 +1,6 @@
 {
   "name": "Hype Map",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "icons": {
     "48": "icon48.png",
     "32": "icon32.png",
@@ -11,6 +11,6 @@
     "js": ["content.js"]
   }],
   "web_accessible_resources": ["index.js", "index.css"],
-  "permissions": ["https://www.twitch.tv/*", "https://dashboard.twitch.tv/*"],
+  "permissions": ["https://www.twitch.tv/*", "https://dashboard.twitch.tv/*", "storage"],
   "manifest_version": 2
 }

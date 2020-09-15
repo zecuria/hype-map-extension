@@ -25,9 +25,24 @@ const requestVideo = async (videoId: string) => {
 const mount = async (videoId: string) => {
   const graphHeight = 100;
 
+  const communicator = document.getElementById('hype-map-communication');
+
+  if (!communicator) {
+    return;
+  }
+  const isHidden = communicator.dataset.hide === 'true';
+
+  const onHide = (isHidden: boolean) => {
+    communicator.dispatchEvent(new CustomEvent<{ isHidden: boolean }>('setHide', {
+      detail: {
+        isHidden
+      },
+    }));
+  }
+
   ReactDOM.render(
     <React.StrictMode>
-      <App isLoading={true} errorMessage="" data={[]} graphHeight={graphHeight} />
+      <App isLoading={true} errorMessage="" data={[]} graphHeight={graphHeight} isHidden={isHidden} onHide={onHide}/>
     </React.StrictMode>,
     document.getElementById(id)
   );
@@ -40,14 +55,14 @@ const mount = async (videoId: string) => {
   if (res.success) {
     ReactDOM.render(
       <React.StrictMode>
-        <App isLoading={false} errorMessage="" data={res.data} graphHeight={graphHeight} />
+        <App isLoading={false} errorMessage="" data={res.data} graphHeight={graphHeight} isHidden={isHidden} onHide={onHide}/>
       </React.StrictMode>,
       document.getElementById(id)
     );
   } else {
     ReactDOM.render(
       <React.StrictMode>
-        <App isLoading={false} errorMessage={res.error} data={[]} graphHeight={graphHeight} />
+        <App isLoading={false} errorMessage={res.error} data={[]} graphHeight={graphHeight} isHidden={isHidden} onHide={onHide}/>
       </React.StrictMode>,
       document.getElementById(id)
     );
@@ -55,7 +70,7 @@ const mount = async (videoId: string) => {
 }
 
 const main = () => {
-  const videoPlayer = document.querySelector('[data-test-selector="video-player__video-container"]');
+  const videoPlayer = document.querySelector('[data-test-selector="video-player__video-container"] > div > div');
 
   const path = Path.createPath('/videos/:videoId');
   const path2 = Path.createPath('/u/:user/content/video-producer/highlighter/:videoId');
@@ -67,10 +82,8 @@ const main = () => {
 
   const result = path.partialTest(window.location.pathname) || {};
   const result2 = path2.partialTest(window.location.pathname) || {};
-  console.log(result2);
   const mountedVideoId = element && element.dataset.videoId;
 
-  console.log(element);
   const videoId = result.videoId || result2.videoId;
   if (videoId && !element) {
     const anchor = document.createElement('div');
@@ -78,7 +91,8 @@ const main = () => {
     anchor.style.left = `${0}px`;
     anchor.style.width = `100%`;
     anchor.style.bottom = `${84}px`;
-    anchor.style.zIndex = '100000';
+    anchor.style.zIndex = '1';
+    anchor.style.transitionDuration = '250ms';
     anchor.id = id;
     anchor.setAttribute("class", "tw-pd-x-2")
     videoPlayer.insertBefore(anchor, videoPlayer.childNodes[0]);
@@ -120,6 +134,6 @@ var config = {
   subtree: true
 };
 
-if(bodyList){
+if (bodyList) {
   observer.observe(bodyList, config);
 }

@@ -40,10 +40,36 @@ div.app-test {
   text-decoration: none;
 }
 
-[data-a-player-type="site_mini"] #hype-map-extension-root {
+[data-a-player-type="site_mini"] #hype-map-extension-root .app-wrapper {
   display: none;
 }
 
+.video-player__inactive #hype-map-extension-root .app-wrapper:not(.focused) {
+  opacity: 0;
+  transition-duration: 250ms;
+}
+
+.muted-segments-alert {
+  z-index: 100;
+}
+
+.app-test .icon-parent {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.app-test .full-pb {
+  padding-bottom: 100%;
+}
+
+.app-test .icon-parent > :not(.spacer) {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  min-height: 100%;
+  top: 0px;
+}
 .App {
   /* background-color: rgba(0,0,0,.6) */
 }

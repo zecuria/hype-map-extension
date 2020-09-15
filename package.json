@@ -18,11 +18,12 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "recharts": "^1.8.5",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "webextension-polyfill-ts": "^0.19.0"
   },
   "scripts": {
-    "start": "parcel src/index.tsx --no-hmr",
-    "build": "parcel build src/index.tsx --no-source-maps",
+    "start": "parcel src/index.tsx src/content.ts --no-hmr",
+    "build": "parcel build src/index.tsx src/content.ts --no-source-maps",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
