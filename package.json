@@ -32,6 +32,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": "=1.22.17",
+    "node": ">=12 <13"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import { Path } from 'path-parser';
 import App from './App';
-import json from './test.json';
 
 const id = 'hype-map-extension-root';
 
@@ -31,32 +30,6 @@ const mount = async (videoId: string) => {
     </React.StrictMode>,
     document.getElementById(id),
   );
-
-  // const data = await requestVideo(videoId)
-  // const { error } = data;
-
-  // const res = error ? { success: false, error } : { success: true, data };
-  const res = {
-    success: true,
-    data: json,
-    error: 'false',
-  };
-
-  if (res.success) {
-    ReactDOM.render(
-      <React.StrictMode>
-        <App videoId={videoId} graphHeight={graphHeight} isHidden={isHidden} onHide={onHide} />
-      </React.StrictMode>,
-      document.getElementById(id),
-    );
-  } else {
-    ReactDOM.render(
-      <React.StrictMode>
-        <App videoId={videoId} graphHeight={graphHeight} isHidden={isHidden} onHide={onHide} />
-      </React.StrictMode>,
-      document.getElementById(id),
-    );
-  }
 };
 
 const main = () => {

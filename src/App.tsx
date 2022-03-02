@@ -5,7 +5,7 @@ import hotkeys from 'hotkeys-js';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { ToggleHide } from './Components/ToggleView';
 import { ProcessVideoButton } from './Components/ProcessVideoButton';
-import { Status, useVideoData } from './hooks/useVideoData';
+import { ErrorCode, Status, useVideoData } from './hooks/useVideoData';
 import { Chart } from './Chart';
 import { Message } from './Components/Message';
 // import { CloseButton } from './Components/CloseButton';
@@ -21,8 +21,6 @@ function App({
 }: AppProps) {
   const [hide, setHide] = useState(isHidden);
   const { process, videoState} = useVideoData(videoId)
-  const [showMessage, setShowMessage] = useState(true);
-
   useEffect(() => {
     hotkeys('alt+h', () => {
       setHide(!hide);
@@ -34,10 +32,6 @@ function App({
   useEffect(() => {
     onHide(hide);
   }, [hide]);
-
-  useEffect(() => {
-    setShowMessage(true);
-  }, [videoState.status])
 
   // if (message) {
   //   return (
@@ -101,8 +95,8 @@ function App({
     const distance = formatDistanceToNowStrict(new Date(videoState.nextReset));
     return (
       <div className="app-wrapper">
-        <Message isOpen={showMessage}>
-          You have reached the video limit, if you would like to gain more videos and support the development you can go <a href="https://hypemap.io">here</a>.
+        <Message>
+          You have reached the video limit, relax go to some friends, chill out and see the real world ffs.
         </Message>
         <div className="app-test tw-flex tw-root--hover">
           <ToggleHide isHidden={hide} onToggle={setHide} />
@@ -114,6 +108,21 @@ function App({
     );
   }
 
+  if (videoState.status === Status.ERROR && videoState.code === ErrorCode.LOGGED_OUT) {
+    return (
+      <div className="app-wrapper">
+        <Message>
+           You need to login to twitch to use the extension. Don’t have an account? well tough shit eh.
+        </Message>
+        <div className="app-test tw-flex tw-root--hover">
+          <ToggleHide isHidden={hide} onToggle={setHide} />
+          <ProcessVideoButton tooltip="You are not logged in">
+            Login to use the service
+          </ProcessVideoButton>
+        </div>
+      </div>
+    );
+  }
   if (videoState.status === Status.ERROR) {
     return (
       <div className="app-wrapper">
@@ -126,17 +135,6 @@ function App({
       </div>
     )
   }
-
-  // if (errorMessage) {
-  //   return (
-  //     <div style={{ backgroundColor: '#fff' }}>
-  //       Error:
-  //       {errorMessage}
-  //       {' '}
-  //       (to hide / show press alt+h)
-  //     </div>
-  //   );
-  // }
 
   if (videoState.status === Status.SUCCESS) {
     return (

@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react"
 import { CloseButton } from "./CloseButton";
 
 type MessageProps = {
-  isOpen: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const Message = ({ children, isOpen }: MessageProps) => {
-  const [open, setOpen] = useState(isOpen);
+export const Message = ({ children }: MessageProps) => {
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     const root = document.getElementById("hype-map-extension-root");
     if (!root) {

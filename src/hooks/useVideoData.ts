@@ -53,6 +53,9 @@ const getVideo = async ({ videoId, token }: VideoArgs) => {
   if(res.status === 202) {
     return { ...def, isProcessing: true, isEnabled: true};
   }
+  if (res.status === 403) {
+    throw new Error("logged_out");
+  }
 
   if (res.status === 404) {
     return def;
@@ -155,7 +158,13 @@ export const useVideoData = (videoId: string) => {
         setState({ status: Status.NOT_ENABLED });
       }
     } catch (err) {
-      setState({ status: Status.ERROR, code: ErrorCode.UNEXPECTED_ERROR });
+      if (err instanceof Error && err.message === "logged_out") {
+        Cookie.remove(HYPE_MAP_AUTH_COOKIE)
+        await getToken({ auth, name });
+        await fetchVideo();
+      } else {
+        setState({ status: Status.ERROR, code: ErrorCode.UNEXPECTED_ERROR });
+      }
     }
   };
 
